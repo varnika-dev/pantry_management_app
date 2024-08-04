@@ -1,0 +1,13 @@
+/* styles/globals.css */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  margin-bottom: 16px;
+}
+
+.divider {
+  margin: 8px 0;
+}

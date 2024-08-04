@@ -1,57 +1,41 @@
-// components/PantryForm.js
-import React, { useState } from 'react';
-import { db } from '../firebase';
-import { collection, addDoc } from 'firebase/firestore';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { useState } from 'react';
+import { TextField, Button } from '@mui/material';
 
-const PantryForm = () => {
-  const [item, setItem] = useState({ name: '', quantity: '' });
+export default function PantryForm({ onAddItem }) {
+  const [name, setName] = useState('');
+  const [quantity, setQuantity] = useState(0);
+  const [message, setMessage] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setItem((prevItem) => ({
-      ...prevItem,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const docRef = await addDoc(collection(db, 'pantry'), item);
-      console.log('Document written with ID: ', docRef.id);
-      setItem({ name: '', quantity: '' });
-    } catch (e) {
-      console.error('Error adding document: ', e);
-    }
+    onAddItem({ name: name.trim().toLowerCase(), quantity: parseInt(quantity, 10) });
+    setMessage('Items added to inventory');
+    setTimeout(() => setMessage(''), 3000); // Clear message after 3 seconds
+    setName('');
+    setQuantity(0);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ marginBottom: '16px' }}>
       <TextField
         label="Item Name"
-        name="name"
-        value={item.name}
-        onChange={handleChange}
+        variant="outlined"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
         required
-        fullWidth
-        margin="normal"
+        style={{ marginRight: '16px' }}
       />
       <TextField
         label="Quantity"
-        name="quantity"
-        value={item.quantity}
-        onChange={handleChange}
+        variant="outlined"
+        type="number"
+        value={quantity}
+        onChange={(e) => setQuantity(e.target.value)}
         required
-        fullWidth
-        margin="normal"
+        style={{ marginRight: '16px' }}
       />
-      <Button type="submit" variant="contained" color="primary">
-        Add Item
-      </Button>
+      <Button type="submit" variant="contained" color="primary">Add Item</Button>
+      {message && <div>{message}</div>}
     </form>
   );
-};
-
-export default PantryForm;
+}

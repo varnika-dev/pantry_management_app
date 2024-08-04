@@ -1,24 +1,27 @@
 // components/SearchBar.js
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
+import React from 'react';
+import { TextField, InputAdornment } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
-const SearchBar = ({ onSearch }) => {
-  const [query, setQuery] = useState('');
-
-  const handleChange = (e) => {
-    setQuery(e.target.value);
-    onSearch(e.target.value);
+export default function SearchBar({ search, onSearch }) {
+  const handleSearchChange = (event) => {
+    onSearch(event.target.value);
   };
 
   return (
     <TextField
-      label="Search Items"
-      value={query}
-      onChange={handleChange}
-      fullWidth
-      margin="normal"
+      label="Search"
+      variant="outlined"
+      value={search}
+      onChange={handleSearchChange}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <SearchIcon />
+          </InputAdornment>
+        ),
+      }}
+      style={{ marginRight: '20px', width: '300px' }} // Adjust margin as needed
     />
   );
-};
-
-export default SearchBar;
+}
