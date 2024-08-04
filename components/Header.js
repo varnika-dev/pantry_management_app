@@ -5,7 +5,8 @@ import SearchIcon from '@mui/icons-material/Search';
 export default function Header({ search, setSearch }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', backgroundColor: '#f5f5f5', borderBottom: '1px solid #ddd' }}>
-      <h1 style={{ margin: 0, fontSize: '2rem' }}>Varnika's Pantry Tracker </h1>
+      <h1 style={{ fontSize: '2.5rem', marginBottom: '20px' }}>Varnika&apos;s Pantry</h1>
+
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <TextField
           value={search}
